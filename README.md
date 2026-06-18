@@ -2,30 +2,31 @@
 
 ## Overview
 
-Duplicate Question Detection is a Natural Language Processing (NLP) project that identifies whether two questions have the same meaning, even if they are phrased differently.
+Duplicate Question Detection is a Natural Language Processing (NLP) and Machine Learning project that identifies whether two questions have the same meaning, even when they are written differently.
 
-The system uses text preprocessing, feature engineering, TF-IDF vectorization, and XGBoost classification to predict whether a pair of questions are duplicates.
+The system combines advanced text preprocessing, feature engineering, TF-IDF vectorization, and an XGBoost classifier to determine if two questions are duplicates.
 
-Example:
+### Example
 
 **Question 1:** How can I learn Python?
 
 **Question 2:** What is the best way to learn Python?
 
-**Prediction:** Duplicate Questions ✅
+**Prediction:** Duplicate Questions 
 
 ---
 
 ## Features
 
 * Text preprocessing and cleaning
-* Feature engineering using NLP techniques
-* Fuzzy string matching features
+* NLP-based feature engineering
+* Fuzzy string matching
 * TF-IDF vectorization
 * XGBoost classifier
 * Flask REST API backend
 * Interactive web interface
 * Real-time duplicate question prediction
+* Confidence score prediction
 
 ---
 
@@ -60,9 +61,9 @@ Prediction Result
 
 ## Dataset
 
-The project uses the Quora Question Pairs Dataset containing over 400,000 question pairs.
+This project uses the Quora Question Pairs Dataset containing over **404,000 question pairs**.
 
-Dataset Information:
+### Dataset Information
 
 * Total Samples: ~404,000
 * Target Variable:
@@ -70,11 +71,11 @@ Dataset Information:
   * 1 → Duplicate Questions
   * 0 → Non-Duplicate Questions
 
-The dataset consists of:
+Dataset Columns:
 
-* Question 1
-* Question 2
-* Duplicate Label
+* question1
+* question2
+* is_duplicate
 
 ---
 
@@ -99,6 +100,7 @@ The dataset consists of:
 
 * Flask
 * Flask-CORS
+* Gunicorn
 
 ### Data Processing
 
@@ -106,18 +108,29 @@ The dataset consists of:
 * Pandas
 * SciPy
 
+### Deployment
+
+* Render
+* GitHub
+
 ---
 
 ## Feature Engineering
 
-The following features were extracted from question pairs:
+The following features are extracted from question pairs:
 
 ### Basic Features
 
 * Question Length
 * Number of Words
+* Length Difference
+* Word Count Difference
+
+### Word Similarity Features
+
 * Common Words
 * Word Share
+* Jaccard Similarity
 
 ### Token-Based Features
 
@@ -134,9 +147,21 @@ The following features were extracted from question pairs:
 * Token Sort Ratio
 * Token Set Ratio
 
-### TF-IDF Features
+---
 
-TF-IDF vectorization is used to convert textual information into numerical vectors for model training.
+## TF-IDF Vectorization
+
+TF-IDF is used to convert textual information into numerical vectors.
+
+Configuration:
+
+```python
+TfidfVectorizer(
+    max_features=15000,
+    stop_words="english",
+    ngram_range=(1,2)
+)
+```
 
 ---
 
@@ -146,13 +171,24 @@ TF-IDF vectorization is used to convert textual information into numerical vecto
 
 #### Random Forest Classifier
 
-* Accuracy: ~75%
+Accuracy: ~75%
 
 #### XGBoost Classifier
 
-* Accuracy: ~80.5%
+Accuracy: ~81.93%
 
 The XGBoost model achieved the best performance and was selected for deployment.
+
+---
+
+## Model Performance
+
+| Metric    | Score  |
+| --------- | ------ |
+| Accuracy  | 81.93% |
+| Precision | 81%    |
+| Recall    | 80%    |
+| F1 Score  | 81%    |
 
 ---
 
@@ -168,7 +204,8 @@ Duplicate-Question-Detection
 │   ├── model
 │   │   ├── duplicate_model.pkl
 │   │   ├── vectorizer.pkl
-│   │   └── scaler.pkl
+│   │   ├── scaler.pkl
+│   │   └── feature_cols.pkl
 │   │
 │   └── utils
 │       ├── preprocessing.py
@@ -185,7 +222,7 @@ Duplicate-Question-Detection
 ├── dataset
 │
 ├── README.md
-└── requirements.txt
+└── .gitignore
 ```
 
 ---
@@ -195,20 +232,23 @@ Duplicate-Question-Detection
 ### Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/bstar042005/Duplicate-Question-Detection.git
+```
+
+```bash
 cd Duplicate-Question-Detection
 ```
 
 ### Install Dependencies
 
 ```bash
+cd backend
 pip install -r requirements.txt
 ```
 
-### Run Flask Server
+### Run Backend Server
 
 ```bash
-cd backend
 python app.py
 ```
 
@@ -243,27 +283,31 @@ POST /predict
 
 ```json
 {
-  "duplicate": 1
+  "duplicate": 1,
+  "confidence": 92.45
 }
 ```
 
 Where:
 
 * 1 → Duplicate
-* 0 → Not Duplicate
+* 0 → Non-Duplicate
+* confidence → Model confidence percentage
 
 ---
 
-## Results
+## Frontend
 
-| Model            | Accuracy |
-| ---------------- | -------- |
-| Random Forest    | ~75%     |
-| XGBoost + TF-IDF | ~80.5%   |
+The project includes a simple and responsive frontend built using:
+
+* HTML
+* CSS
+* JavaScript
+
+Users can enter two questions and receive real-time duplicate detection results from the Flask API.
 
 ---
 
 ## Author
 
 **Bhavya Vaish**
-
