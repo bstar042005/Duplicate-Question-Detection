@@ -124,9 +124,6 @@ def build_features(q1, q2):
         len(q1) - len(q2)
     )
 
-    features['len_diff'] = abs(
-    len(q1) - len(q2)
-)
 
     features['word_count_diff'] = abs(
         len(q1.split()) -
@@ -146,10 +143,6 @@ def build_features(q1, q2):
     features['q1_num_words'] = len(q1.split())
     features['q2_num_words'] = len(q2.split())
 
-    features['word_count_diff'] = abs(
-        len(q1.split()) -
-        len(q2.split())
-    )
 
     # overlap features
     features['common_words'] = common_words(q1, q2)

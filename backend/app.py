@@ -53,7 +53,10 @@ feature_cols = [
     'fuzz_ratio',
     'fuzz_partial_ratio',
     'token_sort_ratio',
-    'token_set_ratio'
+    'token_set_ratio',
+    'len_diff',
+    'word_count_diff',
+    'jaccard'
 ]
 
 
