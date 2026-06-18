@@ -16,7 +16,7 @@ async function checkDuplicate() {
     try{
 
         const response = await fetch(
-            "http://127.0.0.1:5000/predict",
+            "https://duplicate-question-detection.onrender.com/predict",
             {
                 method:"POST",
                 headers:{
