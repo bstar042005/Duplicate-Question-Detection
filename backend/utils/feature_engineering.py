@@ -1,8 +1,12 @@
 from fuzzywuzzy import fuzz
+import nltk
 from nltk.corpus import stopwords
 
-STOP_WORDS = set(stopwords.words('english'))
-
+try:
+    STOP_WORDS = set(stopwords.words("english"))
+except:
+    nltk.download("stopwords")
+    STOP_WORDS = set(stopwords.words("english"))
 
 def common_words(q1, q2):
 
